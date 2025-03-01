@@ -2,6 +2,8 @@ import './App.css';
 import Editor from '@monaco-editor/react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { SiJavascript, SiPython, SiCplusplus, SiOpenjdk } from "react-icons/si";
+
 
 function App() {
   const [code, setCode] = useState({
@@ -39,12 +41,11 @@ print("Hello, World!")
   const [isRunning, setIsRunning] = useState(false);
   const [theme, setTheme] = useState('vs-dark');
 
-  // Language icons mapping
   const languageIcons = {
-    cpp: "🔷",
-    javascript: "🟨",
-    java: "☕",
-    python: "🐍",
+    cpp: <SiCplusplus className="text-blue-500 text-xl" />, // C++ icon
+    javascript: <SiJavascript className="text-yellow-500 text-xl" />, // JavaScript icon
+    java: <SiOpenjdk className="text-red-500 text-xl" />, // OpenJDK icon (closest to Java)
+    python: <SiPython className="text-blue-300 text-xl" />, // Python icon
   };
 
   // Download code
@@ -122,7 +123,6 @@ print("Hello, World!")
         <div className="flex justify-between items-center bg-gradient-to-r from-indigo-800 to-purple-700 p-4 rounded-t-xl">
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2">
-              <span className="text-white text-2xl font-bold">⚙️</span>
               <label htmlFor="languages" className="text-gray-100 text-sm font-medium">
                 Language:
               </label>
@@ -134,10 +134,10 @@ print("Hello, World!")
                 onChange={handleChange}
                 className="w-40 pl-10 pr-3 py-2 bg-opacity-20 bg-black text-white text-sm border border-purple-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 appearance-none"
               >
-                <option value="cpp">C++</option>
-                <option value="javascript">JavaScript</option>
-                <option value="java">Java</option>
-                <option value="python">Python</option>
+                <option className='text-black' value="cpp">C++</option>
+                <option className='text-black' value="javascript">JavaScript</option>
+                <option className='text-black' value="java">Java</option>
+                <option className='text-black' value="python">Python</option>
               </select>
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
                 {languageIcons[currentLang]}
@@ -224,12 +224,12 @@ print("Hello, World!")
           <div className="w-1/3 flex flex-col p-4 space-y-4 bg-gray-850">
             {/* Input Box */}
             <div className="flex-1">
-              <div className="flex justify-between items-center mb-2">
-                <h3 className="text-gray-300 font-semibold">Input</h3>
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="text-gray-300 text-2xl font-semibold">Input</h3>
                 <span className="text-xs text-gray-500 font-mono">stdin</span>
               </div>
               <textarea
-                className="w-full h-[calc(50%-2rem)] bg-gray-800 text-gray-200 border border-gray-700 rounded-xl p-4 
+                className="w-full custom-scrollbar h-[calc(50%-2rem)] bg-gray-800 text-gray-200 border border-gray-700 rounded-xl p-4 
                         focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none font-mono text-sm"
                 placeholder="Enter your program input here..."
                 value={input}
@@ -240,12 +240,12 @@ print("Hello, World!")
 
             {/* Output Box */}
             <div className="flex-1">
-              <div className="flex justify-between items-center mb-2">
-                <h3 className="text-gray-300 font-semibold">Output</h3>
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="text-gray-300 text-2xl font-semibold">Output</h3>
                 <span className="text-xs text-gray-500 font-mono">stdout</span>
               </div>
               <div
-                className={`w-full h-[calc(50%-2rem)] bg-gray-800 text-gray-200 border ${
+                className={`w-full h-[calc(50%-2rem)] bg-gray-800 text-gray-200 border custom-scrollbar ${
                   output.includes('Error:') ? 'border-red-600' : 'border-gray-700'
                 } rounded-xl p-4 overflow-auto font-mono text-sm`}
               >
